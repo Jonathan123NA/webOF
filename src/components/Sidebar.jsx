@@ -6,7 +6,7 @@ export function Sidebar() {
             <div className='mt-6'>
                 <header className='flex justify-center items-center flex-col'>
                     <div className='flex items-center mb-6'>
-                        <img class='w-6 h-6 mr-3 rounded-full shadow-lg' src='../../public/vite.svg' alt='logo image' />
+                        <img className='w-6 h-6 mr-3 rounded-full shadow-lg' src='../../public/vite.svg' alt='logo image' />
                         <h1 className='block font-semibold text-gray-900 dark:text-white'>Orden Facil</h1>
                     </div>
                     <h2 className='block font-medium text-gray-900 dark:text-gray-300'>@username</h2>
