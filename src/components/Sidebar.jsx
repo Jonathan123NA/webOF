@@ -1,6 +1,6 @@
 import { DefaultButton } from './DefaultButton';
 
-export function Sidebar() {
+export function Sidebar({ setTableTitle, setTableNameToUrl }) {
     return (
         <aside className='sidebar w-56 -translate-x-full transform bg-white p-4 transition-transform duration-150 ease-in md:translate-x-0 md:shadow-md dark:bg-zinc-800'>
             <div className='mt-6'>
@@ -12,9 +12,9 @@ export function Sidebar() {
                     <h2 className='block font-medium text-gray-900 dark:text-gray-300'>@username</h2>
                 </header>
                 <nav className='grid gap-4 mt-12 mb-80'>
-                    <DefaultButton label='Buscar' />
-                    <DefaultButton label='Usuarios' />
-                    <DefaultButton label='Articulos' />
+                    <DefaultButton label='Buscar' tableTitle={setTableTitle} tableNameToUrl={setTableNameToUrl} tableName='usuarios' />
+                    <DefaultButton label='Usuarios' tableTitle={setTableTitle} tableNameToUrl={setTableNameToUrl} tableName='usuarios' />
+                    <DefaultButton label='Articulos' tableTitle={setTableTitle} tableNameToUrl={setTableNameToUrl} tableName='articulos' />
                 </nav>
                 <footer className='mt-auto justify-end'>
                     <DefaultButton label='Cerrar Sesion' />

@@ -1,7 +1,7 @@
-import { IconButton } from "./IconButton";
-import { IconTextButton } from "./IconTextButton";
+import { IconButton } from './IconButton';
+import { IconTextButton } from './IconTextButton';
 
-export function Content({ tableData }) {
+export function Content({ tableData, tableTitle }) {
     const getHeaders = () => {
         if (tableData.length > 0) {
             return Object.keys(tableData[0]);
@@ -10,27 +10,28 @@ export function Content({ tableData }) {
     };
 
     const headers = getHeaders();
+    const defaultTableTitle = 'Buscar';
 
     return (
         <main className='main -ml-48 flex flex-grow flex-col p-4 transition-all duration-150 ease-in md:ml-0'>
             <div className='p-10 w-full h-full inline-block items-center justify-center bg-white text-center text-5xl font-bold rounded-lg shadow-md dark:bg-zinc-800 dark:text-white'>
-                <div className="flex items-center justify-between pb-4 bg-white dark:bg-zinc-800">
+                <div className='flex items-center justify-between pb-4 bg-white dark:bg-zinc-800'>
                     <IconTextButton label='Agregar articulo' svg='M1 5.917 5.724 10.5 15 1.5' viewBox='0 0 16 12' />
-                    <label htmlFor="table-search" className="sr-only">Search</label>
-                    <div className="relative">
-                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    <label htmlFor='table-search' className='sr-only'>Search</label>
+                    <div className='relative'>
+                        <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
+                            <svg className='w-4 h-4 text-gray-500 dark:text-gray-400' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'>
+                                <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z' />
                             </svg>
                         </div>
-                        <input type="text" id="table-search-users" className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar" />
+                        <input type='text' id='table-search-users' className='block p-2 pl-10 font-medium text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Buscar' />
                     </div>
                 </div>
-                <div className="relative overflow-x-auto sm:rounded-lg">
+                <div className='relative overflow-x-auto sm:rounded-lg'>
                     <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-                        <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-zinc-900">
-                            Titulo de la tabla
-                            <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse a list of Flowbite products designed to help you work and play, stay organized, get answers, keep in touch, grow your business, and more.</p>
+                        <caption className='p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-zinc-900'>
+                            {tableTitle || defaultTableTitle}
+                            <p className='mt-1 text-sm font-normal text-gray-500 dark:text-gray-400'>Browse a list of Flowbite products designed to help you work and play, stay organized, get answers, keep in touch, grow your business, and more.</p>
                         </caption>
                         <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-zinc-700 dark:text-gray-400'>
                             <tr>
