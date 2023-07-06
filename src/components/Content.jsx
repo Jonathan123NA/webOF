@@ -1,3 +1,6 @@
+import { IconButton } from "./IconButton";
+import { IconTextButton } from "./IconTextButton";
+
 export function Content({ tableData }) {
     const getHeaders = () => {
         if (tableData.length > 0) {
@@ -11,15 +14,16 @@ export function Content({ tableData }) {
     return (
         <main className='main -ml-48 flex flex-grow flex-col p-4 transition-all duration-150 ease-in md:ml-0'>
             <div className='p-10 w-full h-full inline-block items-center justify-center bg-white text-center text-5xl font-bold rounded-lg shadow-md dark:bg-zinc-800 dark:text-white'>
-                <div className='pb-6 bg-white dark:bg-zinc-800'>
-                    <label htmlFor='table-search' className='sr-only'>Search</label>
-                    <div className='relative mt-1'>
-                        <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
-                            <svg className='w-4 h-4 text-gray-500 dark:text-gray-400' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'>
-                                <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z' />
+                <div class="flex items-center justify-between pb-4 bg-white dark:bg-zinc-800">
+                    <IconTextButton label='Agregar articulo' svg='M1 5.917 5.724 10.5 15 1.5' viewBox='0 0 16 12' />
+                    <label for="table-search" class="sr-only">Search</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input type='text' id='table-search' className='block font-medium p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Search for items' />
+                        <input type="text" id="table-search-users" class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar" />
                     </div>
                 </div>
                 <div className="relative overflow-x-auto sm:rounded-lg">
@@ -43,7 +47,9 @@ export function Content({ tableData }) {
                                         </th>
                                     ))
                                 }
-                                <th scope='col' className='px-6 py-3'></th>
+                                <th scope='col' className='px-6 py-3'>
+                                    Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,7 +80,12 @@ export function Content({ tableData }) {
                                                 return null;
                                             })}
                                             <td className='px-6 py-4'>
-                                                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>Edit</a>
+                                                {
+                                                    <>
+                                                        <IconButton color='blue' svg='M7.418 17.861 1 20l2.139-6.418m4.279 4.279 10.7-10.7a3.027 3.027 0 0 0-2.14-5.165c-.802 0-1.571.319-2.139.886l-10.7 10.7m4.279 4.279-4.279-4.279m2.139 2.14 7.844-7.844m-1.426-2.853 4.279 4.279' iconDescription='Edit' />
+                                                        <IconButton color='red' svg='M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z' iconDescription='Delete' />
+                                                    </>
+                                                }
                                             </td>
                                         </tr>
                                     )
