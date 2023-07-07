@@ -1,6 +1,6 @@
 export function DefaultButton({ label, tableTitle, tableNameToUrl, tableName }) {
     const handleClick = () => {
-        tableTitle && tableTitle(label)
+        tableTitle && tableTitle(label);
         tableNameToUrl && tableNameToUrl(tableName);
     }
 

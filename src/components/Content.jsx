@@ -1,7 +1,11 @@
 import { IconButton } from './IconButton';
 import { IconTextButton } from './IconTextButton';
+import axios from 'axios'
 
-export function Content({ tableData, tableTitle }) {
+export function Content({ tableData, setTableData, tableTitle, tableNameToUrl }) {
+    // API URL
+    const apiURL = 'http://localhost:3000/api'
+
     const getHeaders = () => {
         if (tableData.length > 0) {
             return Object.keys(tableData[0]);
@@ -11,6 +15,17 @@ export function Content({ tableData, tableTitle }) {
 
     const headers = getHeaders();
     const defaultTableTitle = 'Buscar';
+
+    const handleDelete = (id) => {
+        axios.delete(`${apiURL}/${tableNameToUrl}/${id}`)
+            .then(() => {
+                const updatedTableData = tableData.filter((item) => item.id !== id);
+                setTableData(updatedTableData);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
 
     return (
         <main className='main -ml-48 flex flex-grow flex-col p-4 transition-all duration-150 ease-in md:ml-0'>
@@ -83,8 +98,15 @@ export function Content({ tableData, tableTitle }) {
                                             <td className='px-6 py-4'>
                                                 {
                                                     <>
-                                                        <IconButton color='blue' svg='M7.418 17.861 1 20l2.139-6.418m4.279 4.279 10.7-10.7a3.027 3.027 0 0 0-2.14-5.165c-.802 0-1.571.319-2.139.886l-10.7 10.7m4.279 4.279-4.279-4.279m2.139 2.14 7.844-7.844m-1.426-2.853 4.279 4.279' iconDescription='Edit' />
-                                                        <IconButton color='red' svg='M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z' iconDescription='Delete' />
+                                                        <IconButton
+                                                            color='blue'
+                                                            svg='M7.418 17.861 1 20l2.139-6.418m4.279 4.279 10.7-10.7a3.027 3.027 0 0 0-2.14-5.165c-.802 0-1.571.319-2.139.886l-10.7 10.7m4.279 4.279-4.279-4.279m2.139 2.14 7.844-7.844m-1.426-2.853 4.279 4.279'
+                                                            iconDescription='Edit' />
+                                                        <IconButton
+                                                            color='red'
+                                                            svg='M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z'
+                                                            iconDescription='Delete'
+                                                            onClick={() => handleDelete(item.id)} />
                                                     </>
                                                 }
                                             </td>
