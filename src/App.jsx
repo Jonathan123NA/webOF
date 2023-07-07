@@ -30,14 +30,12 @@ function App() {
     <div className='flex min-h-screen flex-row bg-gray-100 dark:bg-zinc-700'>
       <Sidebar
         setTableTitle={setTableTitle}
-        setTableNameToUrl={setTableNameToUrl}
-      />
+        setTableNameToUrl={setTableNameToUrl} />
       <Content
         tableData={tableData}
         setTableData={setTableData}
         tableTitle={tableTitle}
-        tableNameToUrl={tableNameToUrl}
-      />
+        tableNameToUrl={tableNameToUrl} />
     </div>
   );
 }

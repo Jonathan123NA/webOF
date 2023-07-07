@@ -1,10 +1,13 @@
+import React, { useState } from 'react';
 import { IconButton } from './IconButton';
 import { IconTextButton } from './IconTextButton';
-import axios from 'axios'
+import { Modal } from './Modal';
+import axios from 'axios';
 
 export function Content({ tableData, setTableData, tableTitle, tableNameToUrl }) {
-    // API URL
-    const apiURL = 'http://localhost:3000/api'
+
+    const apiURL = 'http://localhost:3000/api';
+    const [showModal, setShowModal] = useState(false);
 
     const getHeaders = () => {
         if (tableData.length > 0) {
@@ -27,11 +30,24 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
             });
     };
 
+    const openModal = () => {
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
     return (
         <main className='main -ml-48 flex flex-grow flex-col p-4 transition-all duration-150 ease-in md:ml-0'>
             <div className='p-10 w-full h-full inline-block items-center justify-center bg-white text-center text-5xl font-bold rounded-lg shadow-md dark:bg-zinc-800 dark:text-white'>
                 <div className='flex items-center justify-between pb-4 bg-white dark:bg-zinc-800'>
-                    <IconTextButton label='Agregar articulo' svg='M1 5.917 5.724 10.5 15 1.5' viewBox='0 0 16 12' />
+                    <IconTextButton
+                        label='Agregar articulo'
+                        svg='M1 5.917 5.724 10.5 15 1.5'
+                        viewBox='0 0 16 12'
+                        onClick={openModal} />
+                    {showModal && <Modal showModal={true} closeModal={closeModal} />}
                     <label htmlFor='table-search' className='sr-only'>Search</label>
                     <div className='relative'>
                         <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
