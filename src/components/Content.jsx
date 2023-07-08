@@ -7,7 +7,9 @@ import axios from 'axios';
 export function Content({ tableData, setTableData, tableTitle, tableNameToUrl }) {
 
     const apiURL = 'http://localhost:3000/api';
+    
     const [showModal, setShowModal] = useState(false);
+    const [selectedItemId, setSelectedItemId] = useState(null);
 
     const getHeaders = () => {
         if (tableData.length > 0) {
@@ -41,7 +43,13 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
             });
     };
 
+    const handleEdit = (id) => {
+        setSelectedItemId(id);
+        setShowModal(true);
+    };
+
     const openModal = () => {
+        setSelectedItemId(null);
         setShowModal(true);
     };
 
@@ -59,7 +67,7 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
                         svg='M1 5.917 5.724 10.5 15 1.5'
                         viewBox='0 0 16 12'
                         onClick={openModal} />
-                    {showModal && <ArticlesModal showModal={true} closeModal={closeModal} />}
+                    {showModal && <ArticlesModal showModal={true} closeModal={closeModal} selectedItemId={selectedItemId} />}
                     <label htmlFor='table-search' className='sr-only'>Search</label>
                     <div className='relative'>
                         <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
@@ -129,7 +137,8 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
                                                         <IconButton
                                                             color='blue'
                                                             svg='M7.418 17.861 1 20l2.139-6.418m4.279 4.279 10.7-10.7a3.027 3.027 0 0 0-2.14-5.165c-.802 0-1.571.319-2.139.886l-10.7 10.7m4.279 4.279-4.279-4.279m2.139 2.14 7.844-7.844m-1.426-2.853 4.279 4.279'
-                                                            iconDescription='Edit' />
+                                                            iconDescription='Edit'
+                                                            onClick={() => handleEdit(item.id)} />
                                                         <IconButton
                                                             color='red'
                                                             svg='M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z'

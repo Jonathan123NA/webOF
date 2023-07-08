@@ -1,20 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export function ArticlesModal({ showModal, closeModal }) {
+export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
+
     const apiURL = 'http://localhost:3000/api';
+
+    const [editingArticle, setEditingArticle] = useState({
+        article_name: '',
+        article_description: '',
+        article_amount: '',
+        article_status: '',
+        article_type: ''
+    });
 
     const handleModal = () => {
         closeModal();
     };
 
-    const [newArticle, setNewArticle] = useState({
-        article_name: '',
-        article_description: '',
-        article_amount: '',
-        article_status: '',
-        article_type : ''
-    });
+    useEffect(() => {
+        if (selectedItemId) {
+            axios
+                .get(`${apiURL}/articulos/${selectedItemId}`)
+                .then((res) => {
+                    const { nombre, descripcion, cantidad, estado, id_tipo } = res.data;
+                    setEditingArticle({
+                        article_name: nombre,
+                        article_description: descripcion,
+                        article_amount: cantidad,
+                        article_status: estado,
+                        article_type: id_tipo
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            setEditingArticle({
+                article_name: '',
+                article_description: '',
+                article_amount: '',
+                article_status: '',
+                article_type: ''
+            });
+        }
+    }, [selectedItemId]);
 
     const handleAddArticle = () => {
         const {
@@ -23,7 +52,7 @@ export function ArticlesModal({ showModal, closeModal }) {
             article_amount,
             article_status,
             article_type
-        } = newArticle;
+        } = editingArticle;
 
         const requestData = {
             nombre: article_name,
@@ -33,18 +62,28 @@ export function ArticlesModal({ showModal, closeModal }) {
             id_tipo: article_type
         };
 
-        axios
-            .post(`${apiURL}/articulos`, requestData)
-            .then((res) => {
-                console.log(res);
-                closeModal();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        if (selectedItemId) {
+            axios
+                .put(`${apiURL}/articulos/${selectedItemId}`, requestData)
+                .then((res) => {
+                    console.log(res);
+                    closeModal();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            axios
+                .post(`${apiURL}/articulos`, requestData)
+                .then((res) => {
+                    console.log(res);
+                    closeModal();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     };
-
-
 
     return (
         <>
@@ -72,9 +111,9 @@ export function ArticlesModal({ showModal, closeModal }) {
                                             id='article_name'
                                             className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                             placeholder='Laptop HP'
-                                            value={newArticle.article_name}
-                                            onChange={(e) => setNewArticle({
-                                                ...newArticle,
+                                            value={editingArticle ? editingArticle.article_name : ''}
+                                            onChange={(e) => setEditingArticle({
+                                                ...editingArticle,
                                                 article_name: e.target.value
                                             })}
                                             required />
@@ -87,9 +126,9 @@ export function ArticlesModal({ showModal, closeModal }) {
                                             name='article_description'
                                             className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                             placeholder='Color azul'
-                                            value={newArticle.article_description}
-                                            onChange={(e) => setNewArticle({
-                                                ...newArticle,
+                                            value={editingArticle ? editingArticle.article_description : ''}
+                                            onChange={(e) => setEditingArticle({
+                                                ...editingArticle,
                                                 article_description: e.target.value
                                             })}
                                             required />
@@ -103,9 +142,9 @@ export function ArticlesModal({ showModal, closeModal }) {
                                                 name='article_amount'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                                 placeholder='5'
-                                                value={newArticle.article_amount}
-                                                onChange={(e) => setNewArticle({
-                                                    ...newArticle,
+                                                value={editingArticle ? editingArticle.article_amount : ''}
+                                                onChange={(e) => setEditingArticle({
+                                                    ...editingArticle,
                                                     article_amount: parseInt(e.target.value, 10)
                                                 })}
                                                 required />
@@ -118,9 +157,9 @@ export function ArticlesModal({ showModal, closeModal }) {
                                                 name='article_status'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                                 placeholder='0'
-                                                value={newArticle.article_status}
-                                                onChange={(e) => setNewArticle({
-                                                    ...newArticle,
+                                                value={editingArticle ? editingArticle.article_status : ''}
+                                                onChange={(e) => setEditingArticle({
+                                                    ...editingArticle,
                                                     article_status: parseInt(e.target.value, 10)
                                                 })}
                                                 required />
@@ -133,9 +172,9 @@ export function ArticlesModal({ showModal, closeModal }) {
                                                 name='article_type'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                                 placeholder='1'
-                                                value={newArticle.article_type}
-                                                onChange={(e) => setNewArticle({
-                                                    ...newArticle,
+                                                value={editingArticle ? editingArticle.article_type : ''}
+                                                onChange={(e) => setEditingArticle({
+                                                    ...editingArticle,
                                                     article_type: parseInt(e.target.value, 10)
                                                 })}
                                                 required />
