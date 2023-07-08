@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IconButton } from './IconButton';
 import { IconTextButton } from './IconTextButton';
-import { Modal } from './Modal';
+import { ArticlesModal } from './ArticlesModal';
 import axios from 'axios';
 
 export function Content({ tableData, setTableData, tableTitle, tableNameToUrl }) {
@@ -18,6 +18,17 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
 
     const headers = getHeaders();
     const defaultTableTitle = 'Buscar';
+
+    const updateTableData = () => {
+        axios
+            .get(`${apiURL}/${tableNameToUrl}`)
+            .then((res) => {
+                setTableData(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     const handleDelete = (id) => {
         axios.delete(`${apiURL}/${tableNameToUrl}/${id}`)
@@ -36,6 +47,7 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
 
     const closeModal = () => {
         setShowModal(false);
+        updateTableData();
     };
 
     return (
@@ -47,7 +59,7 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
                         svg='M1 5.917 5.724 10.5 15 1.5'
                         viewBox='0 0 16 12'
                         onClick={openModal} />
-                    {showModal && <Modal showModal={true} closeModal={closeModal} />}
+                    {showModal && <ArticlesModal showModal={true} closeModal={closeModal} />}
                     <label htmlFor='table-search' className='sr-only'>Search</label>
                     <div className='relative'>
                         <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
