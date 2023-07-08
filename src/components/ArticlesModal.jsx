@@ -109,7 +109,7 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
                                         <input
                                             type='text'
                                             id='article_name'
-                                            className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                            className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                             placeholder='Laptop HP'
                                             value={editingArticle ? editingArticle.article_name : ''}
                                             onChange={(e) => setEditingArticle({
@@ -124,7 +124,7 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
                                             type='text'
                                             id='article_description'
                                             name='article_description'
-                                            className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                            className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                             placeholder='Color azul'
                                             value={editingArticle ? editingArticle.article_description : ''}
                                             onChange={(e) => setEditingArticle({
@@ -140,7 +140,7 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
                                                 type='number'
                                                 id='article_amount'
                                                 name='article_amount'
-                                                className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                                className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                                 placeholder='5'
                                                 value={editingArticle ? editingArticle.article_amount : ''}
                                                 onChange={(e) => setEditingArticle({
@@ -155,7 +155,7 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
                                                 type='number'
                                                 id='article_status'
                                                 name='article_status'
-                                                className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                                className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                                 placeholder='0'
                                                 value={editingArticle ? editingArticle.article_status : ''}
                                                 onChange={(e) => setEditingArticle({
@@ -170,7 +170,7 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
                                                 type='number'
                                                 id='article_type'
                                                 name='article_type'
-                                                className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                                className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                                 placeholder='1'
                                                 value={editingArticle ? editingArticle.article_type : ''}
                                                 onChange={(e) => setEditingArticle({

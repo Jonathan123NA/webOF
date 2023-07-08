@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IconButton } from './IconButton';
 import { IconTextButton } from './IconTextButton';
 import { ArticlesModal } from './ArticlesModal';
@@ -7,9 +7,14 @@ import axios from 'axios';
 export function Content({ tableData, setTableData, tableTitle, tableNameToUrl }) {
 
     const apiURL = 'http://localhost:3000/api';
-    
+
     const [showModal, setShowModal] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState(null);
+    const [searchText, setSearchText] = useState('');
+
+    useEffect(() => {
+        setSearchText('');
+    }, [tableNameToUrl]);
 
     const getHeaders = () => {
         if (tableData.length > 0) {
@@ -58,6 +63,58 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
         updateTableData();
     };
 
+    const renderTableRow = (item, index) => {
+        const isLastItem = index === tableData.length - 1;
+        const rowClassName = `bg-white ${isLastItem ? '' : 'border-b'} dark:bg-zinc-900 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-950`;
+
+        return (
+            <tr key={item.id} className={rowClassName}>
+                <td className='w-4 p-4'>
+                    <div className='flex items-center'>
+                        <input id={`checkbox-table-search-${item.id}`} type='checkbox' className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-zinc-700 dark:border-gray-600' />
+                        <label htmlFor={`checkbox-table-search-${item.id}`} className='sr-only'>checkbox</label>
+                    </div>
+                </td>
+                <th className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                    {item.id}
+                </th>
+                {Object.entries(item).map(([key, value]) => {
+                    if (key !== 'id') {
+                        return (
+                            <td key={key} className='px-6 py-4'>
+                                {value}
+                            </td>
+                        );
+                    }
+                    return null;
+                })}
+                <td className='px-6 py-4'>
+                    {
+                        <>
+                            <IconButton
+                                color='blue'
+                                svg='M7.418 17.861 1 20l2.139-6.418m4.279 4.279 10.7-10.7a3.027 3.027 0 0 0-2.14-5.165c-.802 0-1.571.319-2.139.886l-10.7 10.7m4.279 4.279-4.279-4.279m2.139 2.14 7.844-7.844m-1.426-2.853 4.279 4.279'
+                                iconDescription='Edit'
+                                onClick={() => handleEdit(item.id)} />
+                            <IconButton
+                                color='red'
+                                svg='M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z'
+                                iconDescription='Delete'
+                                onClick={() => handleDelete(item.id)} />
+                        </>
+                    }
+                </td>
+            </tr>
+        );
+    };
+
+    const filteredTableData = searchText === ''
+        ? tableData
+        : tableData.filter((item) =>
+            String(item.id).includes(searchText) ||
+            Object.values(item).some((value) => String(value).includes(searchText))
+        );
+
     return (
         <main className='main -ml-48 flex flex-grow flex-col p-4 transition-all duration-150 ease-in md:ml-0'>
             <div className='p-10 w-full h-full inline-block items-center justify-center bg-white text-center text-5xl font-bold rounded-lg shadow-md dark:bg-zinc-800 dark:text-white'>
@@ -75,7 +132,13 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
                                 <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z' />
                             </svg>
                         </div>
-                        <input type='text' id='table-search-users' className='block p-2 pl-10 font-medium text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Buscar' />
+                        <input
+                            type='text'
+                            id='table-search'
+                            className='block p-2.5 pl-10 font-medium text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                            placeholder='Buscar'
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)} />
                     </div>
                 </div>
                 <div className='relative overflow-x-auto sm:rounded-lg'>
@@ -105,52 +168,7 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                tableData.map((item, index) => {
-                                    const isLastItem = index === tableData.length - 1;
-                                    const rowClassName = `bg-white ${isLastItem ? '' : 'border-b'} dark:bg-zinc-900 dark:border-gray-700 hover:bg-zinc-50 dark:hover:bg-gray-800`;
-
-                                    return (
-                                        <tr key={item.id} className={rowClassName}>
-                                            <td className='w-4 p-4'>
-                                                <div className='flex items-center'>
-                                                    <input id={`checkbox-table-search-${item.id}`} type='checkbox' className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-zinc-700 dark:border-gray-600' />
-                                                    <label htmlFor={`checkbox-table-search-${item.id}`} className='sr-only'>checkbox</label>
-                                                </div>
-                                            </td>
-                                            <th className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
-                                                {item.id}
-                                            </th>
-                                            {Object.keys(item).map((key) => {
-                                                if (key !== 'id') {
-                                                    return (
-                                                        <td key={key} className='px-6 py-4'>
-                                                            {item[key]}
-                                                        </td>
-                                                    )
-                                                }
-                                                return null;
-                                            })}
-                                            <td className='px-6 py-4'>
-                                                {
-                                                    <>
-                                                        <IconButton
-                                                            color='blue'
-                                                            svg='M7.418 17.861 1 20l2.139-6.418m4.279 4.279 10.7-10.7a3.027 3.027 0 0 0-2.14-5.165c-.802 0-1.571.319-2.139.886l-10.7 10.7m4.279 4.279-4.279-4.279m2.139 2.14 7.844-7.844m-1.426-2.853 4.279 4.279'
-                                                            iconDescription='Edit'
-                                                            onClick={() => handleEdit(item.id)} />
-                                                        <IconButton
-                                                            color='red'
-                                                            svg='M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z'
-                                                            iconDescription='Delete'
-                                                            onClick={() => handleDelete(item.id)} />
-                                                    </>
-                                                }
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
+                            {filteredTableData.map(renderTableRow)}
                         </tbody>
                     </table>
                 </div>
