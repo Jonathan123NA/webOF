@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IconButton } from './IconButton';
 import { IconTextButton } from './IconTextButton';
 import { ArticlesModal } from './ArticlesModal';
+import { UsersModal } from './UsersModal';
 import axios from 'axios';
 
 export function Content({ tableData, setTableData, tableTitle, tableNameToUrl }) {
@@ -124,7 +125,17 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
                         svg='M1 5.917 5.724 10.5 15 1.5'
                         viewBox='0 0 16 12'
                         onClick={openModal} />
-                    {showModal && <ArticlesModal showModal={true} closeModal={closeModal} selectedItemId={selectedItemId} />}
+
+                    {
+                        showModal && tableTitle === 'Usuarios' && (
+                            <UsersModal showModal={true} closeModal={closeModal} selectedItemId={selectedItemId} />
+                        )
+                    }
+                    {
+                        showModal && tableTitle === 'Articulos' && (
+                            <ArticlesModal showModal={true} closeModal={closeModal} selectedItemId={selectedItemId} />
+                        )
+                    }
                     <label htmlFor='table-search' className='sr-only'>Search</label>
                     <div className='relative'>
                         <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>

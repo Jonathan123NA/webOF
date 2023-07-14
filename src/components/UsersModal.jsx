@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
+export function UsersModal({ showModal, closeModal, selectedItemId }) {
 
     const apiURL = 'http://localhost:3000/api';
 
@@ -100,77 +100,109 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
                             <div className='p-6 space-y-6'>
                                 <form>
                                     <div className="mb-6">
-                                        <label htmlFor='article_name' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Nombre</label>
+                                        <div className='grid gap-6 md:grid-cols-2'>
+                                            <div>
+                                                <label htmlFor='user_name' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Nombre</label>
+                                                <input
+                                                    type='text'
+                                                    id='user_name'
+                                                    className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                                    placeholder='Jared'
+                                                    value={editingUser ? editingUser.user_name : ''}
+                                                    onChange={(e) => setEditingUser({
+                                                        ...editingUser,
+                                                        user_name: e.target.value
+                                                    })}
+                                                    required />
+                                            </div>
+                                            <div>
+                                                <label htmlFor='user_lastname' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Apellidos</label>
+                                                <input
+                                                    type='text'
+                                                    id='user_lastname'
+                                                    className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                                    placeholder='Perez'
+                                                    value={editingUser ? editingUser.user_lastname : ''}
+                                                    onChange={(e) => setEditingUser({
+                                                        ...editingUser,
+                                                        user_lastname: e.target.value
+                                                    })}
+                                                    required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="mb-6">
+                                        <label htmlFor='user_email' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Correo electronico</label>
                                         <input
                                             type='text'
-                                            id='article_name'
+                                            id='user_email'
                                             className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                                            placeholder='Laptop HP'
-                                            value={editingUser ? editingUser.article_name : ''}
+                                            placeholder='jared@correo.com'
+                                            value={editingUser ? editingUser.user_email : ''}
                                             onChange={(e) => setEditingUser({
                                                 ...editingUser,
-                                                article_name: e.target.value
+                                                user_email: e.target.value
                                             })}
                                             required />
                                     </div>
                                     <div className="mb-6">
-                                        <label htmlFor='article_description' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Descripción</label>
+                                        <label htmlFor='user_password' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Contraseña</label>
                                         <input
                                             type='text'
-                                            id='article_description'
-                                            name='article_description'
+                                            id='user_password'
+                                            name='user_password'
                                             className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                                            placeholder='Color azul'
-                                            value={editingUser ? editingUser.article_description : ''}
+                                            placeholder='.....'
+                                            value={editingUser ? editingUser.user_password : ''}
                                             onChange={(e) => setEditingUser({
                                                 ...editingUser,
-                                                article_description: e.target.value
+                                                user_password: e.target.value
                                             })}
                                             required />
                                     </div>
                                     <div className='grid gap-6 md:grid-cols-3'>
                                         <div>
-                                            <label htmlFor='article_amount' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Cantidad</label>
+                                            <label htmlFor='user_rol' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Rol</label>
                                             <input
                                                 type='number'
-                                                id='article_amount'
-                                                name='article_amount'
+                                                id='user_rol'
+                                                name='user_rol'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                                                placeholder='5'
-                                                value={editingUser ? editingUser.article_amount : ''}
+                                                placeholder='Dev'
+                                                value={editingUser ? editingUser.user_rol : ''}
                                                 onChange={(e) => setEditingUser({
                                                     ...editingUser,
-                                                    article_amount: parseInt(e.target.value, 10)
+                                                    user_rol: parseInt(e.target.value, 10)
                                                 })}
                                                 required />
                                         </div>
                                         <div>
-                                            <label htmlFor='article_status' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Estado</label>
+                                            <label htmlFor='user_id_persona' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>ID Persona</label>
                                             <input
                                                 type='number'
-                                                id='article_status'
-                                                name='article_status'
-                                                className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                                                placeholder='0'
-                                                value={editingUser ? editingUser.article_status : ''}
-                                                onChange={(e) => setEditingUser({
-                                                    ...editingUser,
-                                                    article_status: parseInt(e.target.value, 10)
-                                                })}
-                                                required />
-                                        </div>
-                                        <div>
-                                            <label htmlFor='article_type' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Tipo</label>
-                                            <input
-                                                type='number'
-                                                id='article_type'
-                                                name='article_type'
+                                                id='user_id_persona'
+                                                name='user_id_persona'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                                 placeholder='1'
-                                                value={editingUser ? editingUser.article_type : ''}
+                                                value={editingUser ? editingUser.user_id_persona : ''}
                                                 onChange={(e) => setEditingUser({
                                                     ...editingUser,
-                                                    article_type: parseInt(e.target.value, 10)
+                                                    user_id_persona: parseInt(e.target.value, 10)
+                                                })}
+                                                required />
+                                        </div>
+                                        <div>
+                                            <label htmlFor='user_number' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Telefono</label>
+                                            <input
+                                                type='number'
+                                                id='user_number'
+                                                name='user_number'
+                                                className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                                placeholder='5621789206'
+                                                value={editingUser ? editingUser.user_number : ''}
+                                                onChange={(e) => setEditingUser({
+                                                    ...editingUser,
+                                                    user_number: parseInt(e.target.value, 10)
                                                 })}
                                                 required />
                                         </div>
