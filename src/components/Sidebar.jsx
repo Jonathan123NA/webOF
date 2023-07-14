@@ -1,4 +1,4 @@
-import { DefaultButton } from './DefaultButton';
+import { SidebarButton } from './SidebarButton';
 
 export function Sidebar({ setTableTitle, setTableNameToUrl }) {
     return (
@@ -13,13 +13,13 @@ export function Sidebar({ setTableTitle, setTableNameToUrl }) {
                         <h2 className='block font-medium text-gray-900 dark:text-gray-300'>@username</h2>
                     </header>
                     <nav className='grid mt-10 mb-auto mr-4'>
-                        <DefaultButton
+                        <SidebarButton
                             label='Usuarios'
                             svg="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
                             tableTitle={setTableTitle}
                             tableNameToUrl={setTableNameToUrl}
                             tableName='usuarios' />
-                        <DefaultButton
+                        <SidebarButton
                             label='Articulos'
                             svg="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
                             tableTitle={setTableTitle}
@@ -28,7 +28,7 @@ export function Sidebar({ setTableTitle, setTableNameToUrl }) {
                     </nav>
                 </div>
                 <footer className='mt-auto justify-end mb-8 mr-4'>
-                    <DefaultButton
+                    <SidebarButton
                         label='Cerrar Sesion'
                         svg="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                 </footer>
