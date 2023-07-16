@@ -121,9 +121,9 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
             <div className='p-10 w-full h-full inline-block items-center justify-center bg-white text-center text-5xl font-bold rounded-lg shadow-md dark:bg-zinc-800 dark:text-white'>
                 <div className='flex items-center justify-between pb-4 bg-white dark:bg-zinc-800'>
                     <IconTextButton
-                        label='Agregar articulo'
-                        svg='M1 5.917 5.724 10.5 15 1.5'
-                        viewBox='0 0 16 12'
+                        label='Agregar'
+                        svg='M12 4.5v15m7.5-7.5h-15'
+                        viewBox='0 0 24 24'
                         onClick={openModal} />
 
                     {
