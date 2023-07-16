@@ -3,13 +3,17 @@ import axios from 'axios';
 
 export function UsersModal({ showModal, closeModal, selectedItemId }) {
 
+    const modalTitle = selectedItemId ? 'Editar Usuario' : 'Agregar Usuario';
+
     const apiURL = 'http://localhost:3000/api';
 
     const [editingUser, setEditingUser] = useState({
+        user_nombres: '',
+        user_apellidos: '',
+        user_telefono: '',
         user_email: '',
         user_password: '',
-        user_role: '',
-        user_id_persona: ''
+        user_rol: '',
     });
 
     const handleModal = () => {
@@ -21,11 +25,14 @@ export function UsersModal({ showModal, closeModal, selectedItemId }) {
             axios
                 .get(`${apiURL}/usuarios/${selectedItemId}`)
                 .then((res) => {
-                    const { email, password, rol, id_persona } = res.data;
+                    const { nombres, apellidos, telefono, email, password, rol, id_persona } = res.data;
                     setEditingUser({
+                        user_nombres: nombres,
+                        user_apellidos: apellidos,
+                        user_telefono: telefono,
                         user_email: email,
                         user_password: password,
-                        user_role: rol,
+                        user_rol: rol,
                         user_id_persona: id_persona
                     });
                 })
@@ -34,26 +41,34 @@ export function UsersModal({ showModal, closeModal, selectedItemId }) {
                 });
         } else {
             setEditingUser({
+                user_nombres: '',
+                user_apellidos: '',
+                user_telefono: '',
                 user_email: '',
                 user_password: '',
-                user_role: '',
-                user_id_persona: ''
+                user_rol: '',
             });
         }
     }, [selectedItemId]);
 
     const handleAddArticle = () => {
         const {
+            user_nombres,
+            user_apellidos,
+            user_telefono,
             user_email,
             user_password,
-            user_role,
+            user_rol,
             user_id_persona
         } = editingUser;
 
         const requestData = {
+            nombres: user_nombres,
+            apellidos: user_apellidos,
+            telefono: user_telefono,
             email: user_email,
             password: user_password,
-            rol: user_role,
+            rol: user_rol,
             id_persona: user_id_persona
         };
 
@@ -88,7 +103,7 @@ export function UsersModal({ showModal, closeModal, selectedItemId }) {
                         <div className='relative bg-white rounded-lg shadow dark:bg-zinc-900'>
                             <div className='flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600'>
                                 <h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
-                                    Agregar usuario
+                                    {modalTitle}
                                 </h3>
                                 <button type='button' onClick={handleModal} className='text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white' data-modal-hide='staticModal'>
                                     <svg className='w-3 h-3' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 14'>
@@ -102,30 +117,30 @@ export function UsersModal({ showModal, closeModal, selectedItemId }) {
                                     <div className="mb-6">
                                         <div className='grid gap-6 md:grid-cols-2'>
                                             <div>
-                                                <label htmlFor='user_name' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Nombre</label>
+                                                <label htmlFor='user_nombres' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Nombre</label>
                                                 <input
                                                     type='text'
-                                                    id='user_name'
+                                                    id='user_nombres'
                                                     className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                                     placeholder='Jared'
-                                                    value={editingUser ? editingUser.user_name : ''}
+                                                    value={editingUser ? editingUser.user_nombres : ''}
                                                     onChange={(e) => setEditingUser({
                                                         ...editingUser,
-                                                        user_name: e.target.value
+                                                        user_nombres: e.target.value
                                                     })}
                                                     required />
                                             </div>
                                             <div>
-                                                <label htmlFor='user_lastname' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Apellidos</label>
+                                                <label htmlFor='user_apellidos' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Apellidos</label>
                                                 <input
                                                     type='text'
-                                                    id='user_lastname'
+                                                    id='user_apellidos'
                                                     className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                                     placeholder='Perez'
-                                                    value={editingUser ? editingUser.user_lastname : ''}
+                                                    value={editingUser ? editingUser.user_apellidos : ''}
                                                     onChange={(e) => setEditingUser({
                                                         ...editingUser,
-                                                        user_lastname: e.target.value
+                                                        user_apellidos: e.target.value
                                                     })}
                                                     required />
                                             </div>
@@ -163,46 +178,45 @@ export function UsersModal({ showModal, closeModal, selectedItemId }) {
                                     <div className='grid gap-6 md:grid-cols-3'>
                                         <div>
                                             <label htmlFor='user_rol' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Rol</label>
-                                            <input
-                                                type='number'
+                                            <select
                                                 id='user_rol'
                                                 name='user_rol'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                                                placeholder='Dev'
-                                                value={editingUser ? editingUser.user_rol : ''}
+                                                value={editingUser ? editingUser.rol : ''}
                                                 onChange={(e) => setEditingUser({
                                                     ...editingUser,
                                                     user_rol: parseInt(e.target.value, 10)
                                                 })}
-                                                required />
+                                                required
+                                            >
+                                                <option value='' disabled>Seleccionar rol</option>
+                                                <option value='0'>Empleado</option>
+                                                <option value='1'>Administrador</option>
+                                            </select>
                                         </div>
-                                        <div>
-                                            <label htmlFor='user_id_persona' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>ID Persona</label>
                                             <input
-                                                type='number'
+                                                type='hidden'
                                                 id='user_id_persona'
                                                 name='user_id_persona'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                                                placeholder='1'
                                                 value={editingUser ? editingUser.user_id_persona : ''}
                                                 onChange={(e) => setEditingUser({
                                                     ...editingUser,
                                                     user_id_persona: parseInt(e.target.value, 10)
                                                 })}
-                                                required />
-                                        </div>
+                                                />
                                         <div>
-                                            <label htmlFor='user_number' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Telefono</label>
+                                            <label htmlFor='user_telefono' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Telefono</label>
                                             <input
                                                 type='number'
-                                                id='user_number'
-                                                name='user_number'
+                                                id='user_telefono'
+                                                name='user_telefono'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                                 placeholder='5621789206'
-                                                value={editingUser ? editingUser.user_number : ''}
+                                                value={editingUser ? editingUser.user_telefono : ''}
                                                 onChange={(e) => setEditingUser({
                                                     ...editingUser,
-                                                    user_number: parseInt(e.target.value, 10)
+                                                    user_telefono: parseInt(e.target.value, 10)
                                                 })}
                                                 required />
                                         </div>

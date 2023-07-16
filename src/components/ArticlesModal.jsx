@@ -3,6 +3,8 @@ import axios from 'axios';
 
 export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
 
+    const modalTitle = selectedItemId ? 'Editar Articulo' : 'Agregar Articulo';
+
     const apiURL = 'http://localhost:3000/api';
 
     const [editingArticle, setEditingArticle] = useState({
@@ -13,11 +15,23 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
         article_type: ''
     });
 
+    const [tipoArticulos, setTipoArticulos] = useState([]);
+
     const handleModal = () => {
         closeModal();
     };
 
     useEffect(() => {
+        // Obtener los tipos de artículos de la API
+        axios
+            .get(`${apiURL}/tipo_articulos`)
+            .then((res) => {
+                setTipoArticulos(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
         if (selectedItemId) {
             axios
                 .get(`${apiURL}/articulos/${selectedItemId}`)
@@ -93,7 +107,7 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
                         <div className='relative bg-white rounded-lg shadow dark:bg-zinc-900'>
                             <div className='flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600'>
                                 <h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
-                                    Agregar articulo
+                                    {modalTitle}
                                 </h3>
                                 <button type='button' onClick={handleModal} className='text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white' data-modal-hide='staticModal'>
                                     <svg className='w-3 h-3' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 14'>
@@ -151,33 +165,42 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
                                         </div>
                                         <div>
                                             <label htmlFor='article_status' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Estado</label>
-                                            <input
-                                                type='number'
+                                            <select
                                                 id='article_status'
                                                 name='article_status'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                                                placeholder='0'
                                                 value={editingArticle ? editingArticle.article_status : ''}
                                                 onChange={(e) => setEditingArticle({
                                                     ...editingArticle,
                                                     article_status: parseInt(e.target.value, 10)
                                                 })}
-                                                required />
+                                                required
+                                            >
+                                                <option value='' disabled>Seleccionar estado</option>
+                                                <option value='0'>Inactivo</option>
+                                                <option value='1'>Activo</option>
+                                            </select>
                                         </div>
                                         <div>
                                             <label htmlFor='article_type' className='block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white'>Tipo</label>
-                                            <input
-                                                type='number'
+                                            <select
                                                 id='article_type'
                                                 name='article_type'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                                                placeholder='1'
                                                 value={editingArticle ? editingArticle.article_type : ''}
                                                 onChange={(e) => setEditingArticle({
                                                     ...editingArticle,
                                                     article_type: parseInt(e.target.value, 10)
                                                 })}
-                                                required />
+                                                required
+                                            >
+                                                <option value='' disabled>Seleccionar tipo</option>
+                                                {tipoArticulos.map((tipo) => (
+                                                    <option key={tipo.id} value={tipo.id}>
+                                                        {tipo.tipo}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
                                 </form>

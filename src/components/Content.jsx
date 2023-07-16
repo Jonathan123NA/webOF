@@ -80,7 +80,7 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
                     {item.id}
                 </th>
                 {Object.entries(item).map(([key, value]) => {
-                    if (key !== 'id') {
+                    if (key !== 'id' && key !== 'id_persona') {
                         return (
                             <td key={key} className='px-6 py-4'>
                                 {value}
@@ -167,11 +167,16 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
                                     </div>
                                 </th>
                                 {
-                                    headers.map((header, index) => (
-                                        <th key={index} scope='col' className='px-6 py-3'>
-                                            {header}
-                                        </th>
-                                    ))
+                                    headers.map((header, index) => {
+                                        if (header === 'id_persona') {
+                                            return null;
+                                        }
+                                        return (
+                                            <th key={index} scope='col' className='px-6 py-3'>
+                                                {header}
+                                            </th>
+                                        )
+                                    })
                                 }
                                 <th scope='col' className='px-6 py-3'>
                                     Actions
