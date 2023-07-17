@@ -71,6 +71,8 @@ export function UsersModal({ showModal, closeModal, selectedItemId }) {
             rol: user_rol,
             id_persona: user_id_persona
         };
+        if (!user_nombres || !user_apellidos || !user_telefono 
+            || !user_email || !user_password || !user_rol || !user_id_persona) return;
 
         if (selectedItemId) {
             axios
@@ -182,7 +184,7 @@ export function UsersModal({ showModal, closeModal, selectedItemId }) {
                                                 id='user_rol'
                                                 name='user_rol'
                                                 className='font-normal bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                                                value={editingUser ? editingUser.rol : ''}
+                                                value={editingUser ? editingUser.user_rol : ''}
                                                 onChange={(e) => setEditingUser({
                                                     ...editingUser,
                                                     user_rol: parseInt(e.target.value, 10)

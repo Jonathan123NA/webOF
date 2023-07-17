@@ -75,6 +75,7 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
             estado: article_status,
             id_tipo: article_type
         };
+        if(!article_name || !article_description || !article_amount || !article_status || !article_type) return;
 
         if (selectedItemId) {
             axios
