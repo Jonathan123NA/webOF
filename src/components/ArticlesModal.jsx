@@ -5,7 +5,7 @@ export function ArticlesModal({ showModal, closeModal, selectedItemId }) {
 
     const modalTitle = selectedItemId ? 'Editar Articulo' : 'Agregar Articulo';
 
-    const apiURL = 'http://localhost:3000/api';
+    const apiURL = 'https://ordenfacil.azurewebsites.net/api';
 
     const [editingArticle, setEditingArticle] = useState({
         article_name: '',

@@ -4,6 +4,7 @@ import { Sidebar } from './components/Sidebar';
 import axios from 'axios';
 import './App.css';
 import Login from './components/Login';
+import { Dashboard } from './components/Dashboard';
 
 function App() {
   const [tableData, setTableData] = useState([]);
@@ -17,7 +18,7 @@ function App() {
     setUserName('');
   };
 
-  const apiURL = 'http://localhost:3000/api';
+  const apiURL = 'https://ordenfacil.azurewebsites.net/api';
 
   useEffect(() => {
     if (tableNameToUrl) {
@@ -42,12 +43,14 @@ function App() {
             userName={userName}
             handleLogout={handleLogout} // Pasar la función handleLogout como prop al Sidebar
           />
-          <Content
-            tableData={tableData}
-            setTableData={setTableData}
-            tableTitle={tableTitle}
-            tableNameToUrl={tableNameToUrl}
-          />
+          {tableNameToUrl ? (
+            <Content
+              tableData={tableData}
+              setTableData={setTableData}
+              tableTitle={tableTitle}
+              tableNameToUrl={tableNameToUrl}
+            />
+          ) : <Dashboard setTableTitle={setTableTitle} setTableNameToUrl={setTableNameToUrl} />}
         </>
       ) : (
         <Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />

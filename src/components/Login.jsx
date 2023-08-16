@@ -11,7 +11,7 @@ function Login({ setIsLoggedIn, setUserName }) {
 
     try {
       // Envía una solicitud POST al servidor para validar el inicio de sesión
-      const response = await axios.post('http://localhost:3000/api/verificar-credenciales', {
+      const response = await axios.post('https://ordenfacil.azurewebsites.net/api/verificar-credenciales', {
         email,
         password
       });
@@ -31,7 +31,7 @@ function Login({ setIsLoggedIn, setUserName }) {
 
   return (
     <div className="flex justify-center items-center h-screen w-screen">
-      <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-zinc-800 dark:border-zinc-700">
         <form className="space-y-6" onSubmit={handleLogin}>
           <h5 className="text-xl font-medium text-gray-900 dark:text-white">Iniciar Sesión</h5>
           <div>
