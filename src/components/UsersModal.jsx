@@ -5,7 +5,7 @@ export function UsersModal({ showModal, closeModal, selectedItemId }) {
 
     const modalTitle = selectedItemId ? 'Editar Usuario' : 'Agregar Usuario';
 
-    const apiURL = 'http://localhost:3000/api';
+    const apiURL = 'https://ordenfacil.azurewebsites.net/api';
 
     const [editingUser, setEditingUser] = useState({
         user_nombres: '',

@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export function Content({ tableData, setTableData, tableTitle, tableNameToUrl }) {
 
-    const apiURL = 'http://localhost:3000/api';
+    const apiURL = 'https://ordenfacil.azurewebsites.net/api';
 
     const [showModal, setShowModal] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState(null);
@@ -40,6 +40,7 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
 
     const handleDelete = (id) => {
         axios.delete(`${apiURL}/${tableNameToUrl}/${id}`)
+        console.log(`${apiURL}/${tableNameToUrl}/${id}`)
             .then(() => {
                 const updatedTableData = tableData.filter((item) => item.id !== id);
                 setTableData(updatedTableData);
@@ -156,7 +157,6 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
                     <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
                         <caption className='p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-zinc-900'>
                             {tableTitle || defaultTableTitle}
-                            <p className='mt-1 text-sm font-normal text-gray-500 dark:text-gray-400'>Browse a list of Flowbite products designed to help you work and play, stay organized, get answers, keep in touch, grow your business, and more.</p>
                         </caption>
                         <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-zinc-700 dark:text-gray-400'>
                             <tr>
