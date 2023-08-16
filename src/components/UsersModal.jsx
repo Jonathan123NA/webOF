@@ -72,7 +72,7 @@ export function UsersModal({ showModal, closeModal, selectedItemId }) {
             id_persona: user_id_persona
         };
         if (!user_nombres || !user_apellidos || !user_telefono 
-            || !user_email || !user_password || user_rol==='' || !user_id_persona) return;
+            || !user_email || !user_password || user_rol==='' ) return;
 
         if (selectedItemId) {
             axios
