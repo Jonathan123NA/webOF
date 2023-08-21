@@ -39,8 +39,9 @@ export function Content({ tableData, setTableData, tableTitle, tableNameToUrl })
     };
 
     const handleDelete = (id) => {
+        console.log(`${apiURL}/${tableNameToUrl}/${id}`);
         axios.delete(`${apiURL}/${tableNameToUrl}/${id}`)
-        console.log(`${apiURL}/${tableNameToUrl}/${id}`)
+        
             .then(() => {
                 const updatedTableData = tableData.filter((item) => item.id !== id);
                 setTableData(updatedTableData);
